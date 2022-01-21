@@ -19,7 +19,7 @@
     }
 
     &--selected {
-      background-color: rgb(242, 242, 242);
+      background-color: darken($white, 5%);
       color: $dark-background;
 
       &:hover {
