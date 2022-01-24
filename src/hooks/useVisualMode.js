@@ -15,7 +15,7 @@ const useVisualMode = (initialMode) => {
     if (history.length > 1) {
       const newHistory = [...history];
       newHistory.pop();
-      setMode(newHistory[newHistory.length - 1]);
+      setMode(newHistory.slice(-1)[0]);
       setHistory(newHistory);
     }
   };
