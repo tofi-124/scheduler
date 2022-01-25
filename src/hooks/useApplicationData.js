@@ -29,8 +29,7 @@ const useApplicationData = () => {
           appointments,
           days,
         });
-      })
-      .catch((er) => console.log("error", er));
+      });
   }
 
   const cancelInterview = (appointmentID) => {
@@ -44,16 +43,13 @@ const useApplicationData = () => {
     };
 
     const days = updateSpots(state, appointments);
-    return axios
-      .delete(`/api/appointments/${appointmentID}`)
-      .then(() =>
-        setState({
-          ...state,
-          appointments,
-          days,
-        })
-      )
-      .catch((er) => console.log("error", er));
+    return axios.delete(`/api/appointments/${appointmentID}`).then(() =>
+      setState({
+        ...state,
+        appointments,
+        days,
+      })
+    );
   };
 
   const updateSpots = (state, appointments) => {
@@ -62,6 +58,7 @@ const useApplicationData = () => {
     });
 
     const currentDay = days.find((obj) => obj.name === state.day);
+    console.log(currentDay);
 
     const remainingSpots = currentDay.appointments.reduce(
       (remainingSpots, appID) => {
