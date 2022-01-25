@@ -8,6 +8,12 @@ const useVisualMode = (initialMode) => {
     setMode(newMode);
     if (!replace) {
       setHistory((prev) => [...prev, newMode]);
+    } else {
+      setHistory((prev) => {
+        const previous = [...prev];
+        previous.pop();
+        return [previous, newMode];
+      });
     }
   };
 

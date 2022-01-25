@@ -18,10 +18,8 @@ const useApplicationData = () => {
       ...state.appointments,
       [appointmentID]: appointment,
     };
-    setState({
-      ...state,
-      appointments,
-    });
+
+    const days = updateSpots(state, appointments);
 
     return axios
       .put(`/api/appointments/${appointmentID}`, { interview })
@@ -29,6 +27,7 @@ const useApplicationData = () => {
         setState({
           ...state,
           appointments,
+          days,
         });
       })
       .catch((er) => console.log("error", er));
@@ -44,16 +43,38 @@ const useApplicationData = () => {
       [appointmentID]: appointment,
     };
 
+    const days = updateSpots(state, appointments);
     return axios
       .delete(`/api/appointments/${appointmentID}`)
       .then(() =>
         setState({
           ...state,
           appointments,
+          days,
         })
       )
       .catch((er) => console.log("error", er));
   };
+
+  const updateSpots = (state, appointments) => {
+    const days = state.days.map((obj) => {
+      return { ...obj };
+    });
+
+    const currentDay = days.find((obj) => obj.name === state.day);
+
+    const remainingSpots = currentDay.appointments.reduce(
+      (remainingSpots, appID) => {
+        return appointments[appID].interview
+          ? remainingSpots
+          : ++remainingSpots;
+      },
+      0
+    );
+    currentDay.spots = remainingSpots;
+    return days;
+  };
+
   const setDay = (day) => setState({ ...state, day });
 
   useEffect(() => {
