@@ -27,7 +27,6 @@ describe("Form", () => {
     });
   });
 
-  // async await example:
   it("changes the schedule when a new day is selected", async () => {
     const { getByText } = render(<Application />);
 
@@ -51,6 +50,7 @@ describe("Form", () => {
     fireEvent.click(getByText(appointment, "Save"));
 
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
+
     await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
     const day = getAllByTestId(container, "day").find((day) =>
       queryByText(day, "Monday")
