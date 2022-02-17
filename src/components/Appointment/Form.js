@@ -13,6 +13,10 @@ const Form = (props) => {
       return;
     }
 
+    if (!interviewer) {
+      return setError("Interviewer must be selected");
+    }
+
     setError("");
     props.onSave(name, interviewer);
   }
